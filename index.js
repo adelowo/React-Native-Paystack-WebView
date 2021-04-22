@@ -62,11 +62,11 @@ function Paystack(props, ref) {
                               window.onload = payWithPaystack;
                               function payWithPaystack(){
                               var handler = PaystackPop.setup({
-                                key: '${props.paystackKey}',
-                                email: '${props.billingEmail}',
+                                key: ${props.paystackKey},
+                                email: ${props.billingEmail},
                                 amount: ${props.amount},
 				currency: "GHS",
-                                ref: '${props.reference}'
+                                ref: ${props.reference},
                                 metadata: {
                                 custom_fields: [
                                         {
