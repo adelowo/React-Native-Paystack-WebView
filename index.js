@@ -11,7 +11,7 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
-} from "react";
+} from 'react';
 import {
   Modal,
   Text,
@@ -19,8 +19,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   SafeAreaView,
-} from "react-native";
-import { WebView } from "react-native-webview";
+} from 'react-native';
+import { WebView } from 'react-native-webview';
 
 function Paystack(props, ref) {
   const [isLoading, setisLoading] = useState(true);
@@ -62,11 +62,11 @@ function Paystack(props, ref) {
                               window.onload = payWithPaystack;
                               function payWithPaystack(){
                               var handler = PaystackPop.setup({
-                                key: ${props.paystackKey},
-                                email: ${props.billingEmail},
-                                amount: ${props.amount},
+                                key: '${props.paystackKey}',
+                                email: '${props.billingEmail}',
+                                amount: '${props.amount}',
 				currency: "GHS",
-                                ref: ${props.reference},
+                                ref: '${props.reference}',
                                 metadata: {
                                 custom_fields: [
                                         {
@@ -97,13 +97,13 @@ function Paystack(props, ref) {
   const messageRecived = (data) => {
     var webResponse = JSON.parse(data);
     switch (webResponse.event) {
-      case "cancelled":
+      case 'cancelled':
         setshowModal(false);
         props.onCancel();
 
         break;
 
-      case "successful":
+      case 'successful':
         setshowModal(false);
         props.onSuccess(webResponse.transactionRef);
 
@@ -161,9 +161,9 @@ function Paystack(props, ref) {
 export default forwardRef(Paystack);
 
 Paystack.defaultProps = {
-  buttonText: "Pay Now",
+  buttonText: 'Pay Now',
   amount: 10,
-  ActivityIndicatorColor: "green",
+  ActivityIndicatorColor: 'green',
   autoStart: false,
   showPayButton: true,
 };
