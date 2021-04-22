@@ -11,7 +11,7 @@ import React, {
   useEffect,
   forwardRef,
   useImperativeHandle,
-} from 'react';
+} from "react";
 import {
   Modal,
   Text,
@@ -19,8 +19,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   SafeAreaView,
-} from 'react-native';
-import {WebView} from 'react-native-webview';
+} from "react-native";
+import { WebView } from "react-native-webview";
 
 function Paystack(props, ref) {
   const [isLoading, setisLoading] = useState(true);
@@ -42,7 +42,7 @@ function Paystack(props, ref) {
     },
   }));
 
-  const Paystackcontent = `   
+  const Paystackcontent = `
       <!DOCTYPE html>
       <html lang="en">
               <head>
@@ -61,11 +61,11 @@ function Paystack(props, ref) {
                       <script type="text/javascript">
                               window.onload = payWithPaystack;
                               function payWithPaystack(){
-                              var handler = PaystackPop.setup({ 
+                              var handler = PaystackPop.setup({
                                 key: '${props.paystackKey}',
                                 email: '${props.billingEmail}',
-                                amount: ${props.amount}00,
-                                currency: "NGN",
+                                amount: ${props.amount},
+                                currency: ${props.currency},
                                 ref: ''+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
                                 metadata: {
                                 custom_fields: [
@@ -89,21 +89,21 @@ function Paystack(props, ref) {
                                 });
                                 handler.openIframe();
                                 }
-                      </script> 
+                      </script>
               </body>
-      </html> 
+      </html>
       `;
 
-  const messageRecived = data => {
+  const messageRecived = (data) => {
     var webResponse = JSON.parse(data);
     switch (webResponse.event) {
-      case 'cancelled':
+      case "cancelled":
         setshowModal(false);
         props.onCancel();
 
         break;
 
-      case 'successful':
+      case "successful":
         setshowModal(false);
         props.onSuccess(webResponse.transactionRef);
 
@@ -118,17 +118,18 @@ function Paystack(props, ref) {
   };
 
   return (
-    <SafeAreaView style={[{flex: 1}, props.SafeAreaViewContainer]}>
+    <SafeAreaView style={[{ flex: 1 }, props.SafeAreaViewContainer]}>
       <Modal
-        style={[{flex: 1}]}
+        style={[{ flex: 1 }]}
         visible={showModal}
         animationType="slide"
-        transparent={false}>
-        <SafeAreaView style={[{flex: 1}, props.SafeAreaViewContainerModal]}>
+        transparent={false}
+      >
+        <SafeAreaView style={[{ flex: 1 }, props.SafeAreaViewContainerModal]}>
           <WebView
-            style={[{flex: 1}]}
-            source={{html: Paystackcontent}}
-            onMessage={e => {
+            style={[{ flex: 1 }]}
+            source={{ html: Paystackcontent }}
+            onMessage={(e) => {
               messageRecived(e.nativeEvent.data);
             }}
             onLoadStart={() => setisLoading(true)}
@@ -148,7 +149,8 @@ function Paystack(props, ref) {
       {props.showPayButton && (
         <TouchableOpacity
           style={props.btnStyles}
-          onPress={() => setshowModal(true)}>
+          onPress={() => setshowModal(true)}
+        >
           <Text style={props.textStyles}>{props.buttonText}</Text>
         </TouchableOpacity>
       )}
@@ -159,9 +161,9 @@ function Paystack(props, ref) {
 export default forwardRef(Paystack);
 
 Paystack.defaultProps = {
-  buttonText: 'Pay Now',
+  buttonText: "Pay Now",
   amount: 10,
-  ActivityIndicatorColor: 'green',
+  ActivityIndicatorColor: "green",
   autoStart: false,
   showPayButton: true,
 };
